@@ -13,32 +13,33 @@ import ar.edu.davinci.model.User;
 
 @Named
 public class LoginMb {
-	
+
 	@Inject
 	private AuthMb authMb;
 
 	@Inject
 	private UserController userCntr;
-	
+
 	@NotNull
 	private String username;
-	
+
 	@NotNull
 	private String password;
-	
-	public String login(){
+
+	public String login() {
 		try {
 			User user = userCntr.authenticate(username, password);
 			authMb.setUser(user);
 			return "home?faces-redirect=true";
 		} catch (AuthenticationFailure e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"No te pudiste logear, intentalo de nuevo " + e.getMessage(), null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return null;
 		}
 	}
-	
-	public String logout(){
+
+	public String logout() {
 		authMb.setUser(null);
 		return "home?faces-redirect=true";
 	}
@@ -58,5 +59,5 @@ public class LoginMb {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import ar.edu.davinci.exception.AuthenticationFailure;
+import ar.edu.davinci.model.Follower;
 import ar.edu.davinci.model.Image;
 import ar.edu.davinci.model.User;
 
@@ -24,6 +25,19 @@ public class UserController {
 		return entityManager.find(User.class, id);
 	}
 
+	public User follow(User me, String otherUser) {
+		String jpql = "Select u from User u where u.name = :username ";
+		TypedQuery<User> q = entityManager.createQuery(jpql, User.class);
+		q.setParameter("username", otherUser);
+		if (q.getSingleResult().getName().equals(otherUser)) {
+			Follower f = new Follower();
+			f.setMe(me);
+			f.setOtherUser(q.getSingleResult());
+			entityManager.persist(f);
+		}
+		return q.getSingleResult();
+	}
+
 	public User authenticate(String username, String password) throws AuthenticationFailure {
 		try {
 			String jpql = "Select u from User u where u.name = :username and u.password = :password";
@@ -36,14 +50,23 @@ public class UserController {
 		}
 	}
 
-	public void changeProfilePicture(int id, Image img) {
+	public void changeProfilePicture(User u, Image img) {
 
-		String jpql = "Update User u SET u.PROFILEPICTURE_ID = :img where u.id = :id";
+		String jpql = "Update User u SET u.profilePicture = :img where u= :id";
 		TypedQuery<User> q = entityManager.createQuery(jpql, User.class);
-		q.setParameter("id", id);		
-		q.setParameter("img", img.getId());
-		//q.executeUpdate();
-		entityManager.merge(q);
+		q.setParameter("id", u);
+		q.setParameter("img", img);
+		q.executeUpdate();
+
+	}
+
+	public void changePassword(User u, String password) {
+
+		String jpql = "Update User u SET u.password = :password where u= :id";
+		TypedQuery<User> q = entityManager.createQuery(jpql, User.class);
+		q.setParameter("id", u);
+		q.setParameter("password", password);
+		q.executeUpdate();
 
 	}
 

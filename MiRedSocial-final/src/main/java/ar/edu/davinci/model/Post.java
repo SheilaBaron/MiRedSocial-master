@@ -17,23 +17,23 @@ import javax.validation.constraints.Size;
 public class Post {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    
-    @NotNull
-    @Size(min=2,max=255)
-    private String content;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-    @NotNull
-    @ManyToOne
-    private User user;
-    
-    @ManyToOne(fetch=FetchType.EAGER)
-    private Image image;
+	@NotNull
+	@Size(min = 2, max = 255)
+	private String content;
 
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+	@NotNull
+	@ManyToOne
+	private User user;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Image image;
+
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
 	@Override
 	public String toString() {
@@ -80,5 +80,5 @@ public class Post {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	
+
 }

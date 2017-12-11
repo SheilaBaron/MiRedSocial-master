@@ -11,8 +11,10 @@
 	<ui:define name="content">
 		<h:form enctype="multipart/form-data">
 			<div class="panel panel-default">
+				<img src="/image/#{authMb.user.profilePicture.path}"
+					style="width: 150px; height: auto;" />
 				<div class="panel-body">
-					<h:inputFile id="file" value="#{profileMb.img}" />
+					<h:inputFile id="file" value="#{profileMb.file}" />
 					<h:message for="file"></h:message>
 					<h:commandLink styleClass="btn btn-primary"
 						action="#{profileMb.changePorfilePicture}">
@@ -22,14 +24,29 @@
 			</div>
 		</h:form>
 
+		<h:form>
+			<p>Nueva contraseña</p>
+			<h:inputText value="#{profileMb.newPassword}"
+				placeholder="Nueva contraseña"></h:inputText>
+			<h:commandButton action="#{profileMb.changePassword}">Cambiar contrasena</h:commandButton>
+		</h:form>
+
+		<h:form>
+			<p>Seguir a:</p>
+			<h:inputText value="#{profileMb.otherUser}" placeholder="seguir"></h:inputText>
+			<h:commandButton action="#{profileMb.follow}"
+				styleClass="btn btn-primary" />
+		</h:form>
+
+
 		<ui:repeat var="post" value="#{postMb.myPostList}">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<h:outputText value="#{post.user.name}" />
-						<img src="/image/#{post.user.profilePicture.path}" />
-						 <small> 
-						 	<h:outputText value="#{post.date}">
+						<img src="/image/#{post.user.profilePicture.path}"
+							style="width: 50px; height: auto;" /> <small> <h:outputText
+								value="#{post.date}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 							</h:outputText>
 						</small>

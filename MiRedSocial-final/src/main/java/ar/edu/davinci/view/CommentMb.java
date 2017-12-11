@@ -2,6 +2,8 @@ package ar.edu.davinci.view;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -18,20 +20,22 @@ public class CommentMb {
 
 	@Inject
 	private CommentController commentCntrl;
-	
+
 	@Inject
 	private AuthMb authMb;
-	
+
 	@NotNull
-	@Size(min=2,max=255)
+	@Size(min = 2, max = 255)
 	private String comment;
-	
-	public void create(Post post){
+
+	public void create(Post post) {
 		User user = authMb.getUser();
 		commentCntrl.create(user, post, comment);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nuevo comentario", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public List<Comment> listByPost(Post post){
+	public List<Comment> listByPost(Post post) {
 		return commentCntrl.byPost(post);
 	}
 
