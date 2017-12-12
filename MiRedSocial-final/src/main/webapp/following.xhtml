@@ -9,6 +9,12 @@
 		Bienvenido a tu nueva red social
 	</ui:define>
 	<ui:define name="content">
+		<h:form>
+			<p>Seguir a:</p>
+			<h:inputText value="#{profileMb.otherUser}" placeholder="seguir"></h:inputText>
+			<h:commandButton action="#{profileMb.follow}"
+				styleClass="btn btn-primary" />
+		</h:form>
 		<!-- img src="/image/#{theOtherUser.user.profilePicture.path}"
 			style="width: 150px; height: auto;" /-->
 		<h:outputText value="#{theOtherUser.user.name}"></h:outputText>
