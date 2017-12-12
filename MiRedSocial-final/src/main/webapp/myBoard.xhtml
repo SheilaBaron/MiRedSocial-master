@@ -30,14 +30,7 @@
 				placeholder="Nueva contraseña"></h:inputText>
 			<h:commandButton action="#{profileMb.changePassword}">Cambiar contrasena</h:commandButton>
 		</h:form>
-
-		<h:form>
-			<p>Seguir a:</p>
-			<h:inputText value="#{profileMb.otherUser}" placeholder="seguir"></h:inputText>
-			<h:commandButton action="#{profileMb.follow}"
-				styleClass="btn btn-primary" />
-		</h:form>
-
+	
 
 		<ui:repeat var="post" value="#{postMb.myPostList}">
 			<div class="panel panel-default">
